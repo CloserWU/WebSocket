@@ -4,14 +4,56 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="/assets/jquery.js"></script>
+<!--    <script type="text/javascript" src="/assets/g2.min.js"></script>-->
     <script type="text/javascript" src="/socket.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.0.9/dist/g2.min.js"></script>
 </head>
 <body>
-index
 <button onclick="newSocket()">init</button>
 <button onclick="sendMessage(null)">发送</button>
-</body>
+<div id="container"></div>
 <script>
+    const data = [
+        { genre: 0, sold: 0.0, matter: 5.0 },
+        { genre: 1, sold: 0.1, matter: 5.0 },
+        { genre: 2, sold: 0.2, matter: 5.0 },
+        { genre: 3, sold: 0.3, matter: 5.0 },
+        { genre: 4, sold: 0.4, matter: 5.0 },
+        { genre: 5, sold: 0.5, matter: 5.0 },
+        { genre: 6, sold: 0.6, matter: 5.0 },
+        { genre: 7, sold: 0.7, matter: 5.0 },
+    ];
 
+    // Step 1: 创建 Chart 对象
+    const chart = new G2.Chart({
+        container: 'container', // 指定图表容器 ID
+        width: 600, // 指定图表宽度
+        height: 300, // 指定图表高度
+    });
+
+    // Step 2: 载入数据源
+    chart.data(data);
+
+    chart.scale({
+        sold: {
+            min: 0,
+            max: 8,
+        },
+        matter: {
+            min: 0,
+            max: 8,
+        }
+    })
+    chart.tooltip({
+        showCrosshairs: true,
+        shared: true,
+    });
+
+    // Step 3：创建图形语法，绘制柱状图
+    chart.line().position('genre*sold')
+    chart.line().position('genre*matter').color('#f54fff')
+    // Step 4: 渲染图表
+    chart.render();
 </script>
+</body>
 </html>
