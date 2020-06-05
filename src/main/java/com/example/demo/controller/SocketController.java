@@ -8,6 +8,7 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -45,14 +46,18 @@ public class SocketController {
         //在线数加1
         addOnlineCount();
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
+        Long time = System.currentTimeMillis();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     try {
-                        Map<String, Object> m = new HashMap<>();
-                        m.put("time", System.currentTimeMillis());
+                        Map<String, Object> m = new LinkedHashMap<>();
+                        m.put("x", (System.currentTimeMillis() - time) / 100);
+                        m.put("y0", (System.currentTimeMillis() - time) / 100);
+                        m.put("y1", 5);
+                        m.put("y2", 8);
                         sendMessage(objectMapper.writeValueAsString(m));
                         Thread.sleep(500);
                     } catch (IOException | InterruptedException e) {

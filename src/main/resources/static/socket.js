@@ -9,6 +9,11 @@ function newSocket() {
     }
     socket.onmessage = (event) => {
         const res = JSON.parse(event.data)
+        chartData.push(res)
+        if (chart !== null) {
+            chart.changeData(chartData)
+            console.log(chartData)
+        }
         console.log( "Received Message: " );
         console.log(res)
     }
